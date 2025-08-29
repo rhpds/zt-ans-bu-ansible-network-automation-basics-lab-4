@@ -1,121 +1,38 @@
-= Your first Network Ansible Playbook
+= Using Ansible documentation
 
 == For this challenge we will examine an already created Ansible Playbook
 
-=== Ansible Network Automation Basics
 
-The lab objective is to use Ansible Automation to update the configuration of a Cisco CSR router. This exercise will not create an Ansible Playbook, but use an existing one that has been provided.
+=== Network Facts
 
-This exercise will cover:
+Topics Covered:
+- Ansible Documentation
+- Facts for Network Devices
+- The debug module
 
-- examining an existing Ansible Playbook
-- executing an Ansible Playbook on the command line using the ansible-navigator command
-- check mode (the `--check` parameter)
-- verbose mode (the `--verbose` or -v parameter)
+=== "Ansible for Network Automation" Documentation
 
-=== What makes up an Ansible Playbook?
+image::https://github.com/IPvSean/pictures_for_github/blob/master/network_docs.png?raw=true[picture of documentation for network automation]
 
-image::https://github.com/IPvSean/pictures_for_github/blob/master/what_makes_up_playbook.png?raw=true[]
+link:red.ht/NetworkDocs[red.ht/NetworkDocs]
 
+Specific Network Automation Section for Ansible including a getting started guide
 
-=== Ansible Plays
+=== Accessing the Ansible docs
 
-What am I automating?
+With the use of the latest command utility ansible-navigator, one can trigger access to all the modules available to them as well as details on specific modules.
 
-[source,yaml]
+[source,bash]
 ----
----
-- name: configure network devices
-  hosts: network
-  become: yes
-----
-
-*What are they?*
-
-- _Top level specification for a group of tasks._
-
-  Will tell that play which hosts it will execute on and control behavior such as fact gathering or privilege level.
-
-- _Building blocks for playbooks_
-
-  Multiple plays can exist within an Ansible playbook
-
-=== Ansible Modules
-
-_The "tools in the toolkit"_
+$ ansible-navigator doc -l -m stdout
+add_host
+amazon.aws.aws_az_facts
+amazon.aws.aws_caller_facts
+amazon.aws.aws_caller_info
 
 ----
-    - name: ensure that the desired snmp strings are present
-      cisco.ios.config:
-        commands:
-          - snmp-server community ansible-public RO
-          - snmp-server community ansible-private RW
-----
 
-*What are they?*
-
-Parametrized components with internal logic, representing a single step to be done.
-The modules "do" things in Ansible.
-
-*Language*
-
-=== Ansible Plugins
-
-*What are they?*
-Plugins are pieces of code that augment
-Ansible's core functionality. Ansible uses a plugin architecture to enable a rich, flexible, and expandable feature set.
-
-{{ some_variable | `to_nice_json` }} +
-{{ some_variable | `to_nice_yaml` }}
-
-=== Ansible Inventory
-
-*What are they?*
-
-List of systems in your infrastructure that automation is executed against
-
-----
-[web]
-webserver1.example.com
-webserver2.example.com
-
-[db]
-dbserver1.example.com
-
-[switches]
-leaf01.internal.com
-leaf02.internal.com
-----
-
-=== Ansible Roles
-
-[source,yaml]
-----
----
-- name: install and start apache
-  hosts: network
-  roles:
-    - network.toolkit.backup
-----
-
-*What are they?*
-
-Group your tasks and variables of your automation in a reusable structure. Write roles once, and share them with others who have similar challenges in front of them.
-
-=== Ansible Content Collections
-
-_Simplified and consistent content delivery_
-
-*What are they?*
-
-Collections are a directory structure containing automation content such as:
-- Modules
-- Playbooks
-- Roles
-- Plugins
-- Docs
-- Tests
-
+A formal introduction to ansible-navigator and how it can be used to run playbooks in the following exercise.
 
 === Lets get started
 
@@ -124,37 +41,52 @@ That is the end of of your lab briefing!
 Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[width=100px,align=left] in the bottom right corner of this window.
 
 
-== Step 1 - Examine Ansible Playbook
+=== Step 1 - Using documentation
 
-Open the `playbook.yml` in the code-server tab.
+Enter the `ansible-navigator` interactive mode on the terminal tab
 
-We will explore in detail the components of an Ansible Playbook in the next exercise. It is suffice for now to see that this playbook will run two Cisco IOS-XE commands:
-
+[source,bash]
 ----
-snmp-server community ansible-public RO
-snmp-server community ansible-private RW
+ansible-navigator
 ----
 
-== Step 2 - Execute Ansible Playbook
-
-Open the terminal tab and run the following command:
-
+You will see the following:
 ----
-ansible-navigator run playbook.yml --mode stdout
+`:doc <plugin>`
 ----
 
+To show how this works,  use the `debug` module by typing `:doc debug`
 
-- `--mode stdout` - By default ansible-navigator will run in interactive mode. The default behavior can be modified by modifying the ansible-navigator.yml configuration file. As playbooks get longer and involve multiple hosts the interactive mode allows you to "zoom in" on data in real-time, filter it, and navigate between various Ansible components. Since this task only ran one task on one host the stdout is sufficient.
+[source,bash]
+----
+:doc debug
+----
 
-== Step 3 - Verify configuration on router
+The documentation for the `debug` module is now displayed in you interactive terminal session.  This is a YAML representation of the same exact documentation you would see on link:https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html[docs.ansible.com].  Examples can be cut and paste directly from the module documentation into your Ansible Playbook.
 
-Login to the cisco device and run the show run command to check the configuration:
+When referring to a non-built in module, there is three important fields:
+
 ----
-ssh cisco
-show running | i snmp
+namespace.collection.module
 ----
-Output should be similar to the following:
+.For example:
 ----
-snmp-server community ansible-public RO
-snmp-server community ansible-private RW
+cisco.ios.facts
 ----
+
+*Explanation of terms:*
+
+- *namespace* - example *cisco* - A namespace is grouping of multiple collections.  The *cisco* namespace contains multiple collections including *ios*, *nxos*, and *iosxr*.
+
+- *collection* - example *ios* - A collection is a distribution format for Ansible content that can include playbooks, roles, modules, and plugins.  The *ios* collection contains all the modules for Cisco IOS/IOS-XE
+
+- *module* - example facts - Modules are discrete units of code that can be used in a playbook task. For example the *facts* modules will return structured data about that specified system.
+
+Press the *Esc* key to return to the main menu.  Try repeating the `:doc` command with the `cisco.ios.facts` module.
+
+[source,bash]
+----
+:doc cisco.ios.facts
+----
+
+We will be using the facts module in our playbook.

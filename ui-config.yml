@@ -3,15 +3,21 @@ antora:
   name: modules
   dir: www
   modules:
+    - name: index
+      label: "Introduction"
+      solveButton: false
     - name: module-01
-      label: "Your first Network Ansible Playbook"
+      label: "Using Ansible documentation"
       solveButton: false
     - name: module-02
-      label: "Validate idempotency"
+      label: "Ansible Facts Playbook"
+      solveButton: true
+    - name: module-03
+      label: "Using the Debug Module"
       solveButton: false
 
 tabs:
-  - name: "VS Code"
+  - name: "code-server"
     url: https://vscode-${guid}.${domain}/?folder=/home/rhel
     external: false
   - name: "TERMINAL"

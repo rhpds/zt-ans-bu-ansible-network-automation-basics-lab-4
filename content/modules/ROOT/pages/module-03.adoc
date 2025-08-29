@@ -1,0 +1,61 @@
+= Using the Debug Module
+
+== Learn how to use facts with the debug module
+
+=== Displaying output - The "debug" module
+
+The debug module is used like a "print" statement in most programming languages. Variables are accessed
+using "{{ }}" - quoted curly braces
+
+image::https://github.com/IPvSean/pictures_for_github/blob/master/debug.png?raw=true[picture of debug tasks]
+
+=== Working with Ansible facts
+
+image::https://github.com/IPvSean/pictures_for_github/blob/master/display_vlans.png?raw=true[display vlans picture]
+
+=== Running the Ansible Playbook
+
+image::https://github.com/IPvSean/pictures_for_github/blob/master/navigator_output.png?raw=true[display vlans picture]
+
+=== Lets get started
+
+That is the end of of your lab briefing!
+
+Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[start button,100,align=left] in the bottom right corner of this window.
+
+
+== Step 1 - Using the debug task
+
+We will add two additional tasks that display the routers' OS version and serial number.
+
+Click on the code-server tab and append the following tasks to your `facts.yml` playbook:
+
+[source]
+----
+    - name: display version
+      debug:
+        msg: "The IOS version is: {{ ansible_net_version }}"
+
+    - name: display serial number
+      debug:
+        msg: "The serial number is: {{ ansible_net_serialnum }}"
+----
+
+=== Step 2 - Running the playbook with stdout
+
+Click on the terminal tab. Now re-run the playbook using the ansible-navigator and the --mode stdout
+
+The full command is:
+
+[source]
+----
+ansible-navigator run facts.yml --mode stdout
+----
+
+Using less than 20 lines of "code" you have just automated version and serial number collection. Imagine if you were running this against your production network! You have actionable data in hand that does not go out of date.
+
+=== Takeaways
+
+- The `ansible-navigator :doc` command will allow you access to documentation without an internet connection. This documentation also matches the version of Ansible on the control node.
+- The `cisco.ios.facts` module gathers structured data specific for Cisco IOS. There are relevant modules for each network platform. For example there is a `junipernetworks.junos.facts` for Juniper Junos, and a `arista.eos.facts` for Arista EOS.
+- The `debug` module allows an Ansible Playbook to print values to the terminal window.

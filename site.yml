@@ -1,6 +1,6 @@
 ---
 site:
-  title: "Network automation basics: First playbook"
+  title: "Network automation basics: Facts"
   url: https://redhat-scholars.github.io/course-template
   start_page: modules::index.adoc
 

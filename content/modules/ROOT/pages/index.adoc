@@ -1,20 +1,20 @@
-:lab_name: Network automation basics: First playbook
-
+:lab_name: Network automation basics: Facts
 
 = image:https://github.com/network-automation/networking-icons/blob/master/switches/switch_red_small.png?raw=true[] {lab_name}
 
+Learn about retrieving facts from a Cisco IOS-XE device.
 
-Learn the fundamentals of Red Hat Ansible Automation Platform for network automation using ansible-navigator.
+== Ansible Network Automation Basics - Facts
 
-== Ansible Network Automation Basics
 
-The lab objective is to use Ansible Automation to update the configuration of a Cisco CSR router. This exercise will not create an Ansible Playbook, but use an existing one that has been provided.
+=== **Lab Objective: Demonstration use of Ansible facts on network infrastructure**
 
-.*This exercise will cover:*
+Ansible facts are information derived from speaking to the remote network elements.  Ansible facts are returned in structured data (JSON) that makes it easy manipulate or modify.  For example a network engineer could create an audit report very quickly using Ansible facts and templating them into a markdown or HTML file.
 
-- examining an existing Ansible Playbook
-- executing an Ansible Playbook on the command line using the ansible-navigator command
-- check mode (the `--check` parameter)
-- verbose mode (the `--verbose` or -v parameter)
+.This exercise will cover:
+* Building an Ansible Playbook from scratch.
+* Using `ansible-navigator :doc` for documentation
+* Using the link:https://docs.ansible.com/ansible/latest/collections/cisco/ios/ios_facts_module.html[cisco.ios.facts module].
+* Using the link:https://docs.ansible.com/ansible/latest/modules/debug_module.html[debug module].
 
-image:https://github.com/network-automation/networking-icons/blob/master/switches/switch_red_small.png?raw=true[]
+

@@ -1,137 +1,106 @@
-= Validate idempotency
+= Ansible Facts Playbook
 
-== The best playbooks are idempotent playbooks
+== Everything begins and starts with facts
 
-. More about Modules
+=== More about Modules
 
-+
 Modules do the actual work in Ansible, they are what gets executed in each playbook task.
 
-- Typically written in Python (but not limited to it)
-- Modules can be idempotent
-- Modules take user input in the form of parameters
+* Typically written in Python (but not limited to it)
+* Modules can be idempotent
+* Modules take user input in the form of parameters
 
-. Network modules
-+
+=== Network modules
+
 Ansible modules for network automation typically references the vendor OS followed by the module name.
 
-- `namespace.collection.facts`
-- `namespace.collection.command`
-- `namespace.collection.config`
-- `namespace.collection.resource`
+`namename.collection.module`
 
-+
-*For example:*
-- Arista EOS = `arista.eos.`
-- Cisco IOS/IOS-XE = `cisco.ios.`
-- Juniper Junos = `junipsnetworks.junos.`
+* namespace.collection.`facts`
+* namespace.collection.`command`
+* namespace.collection.`config`
+* namespace.collection.`resource`
 
-.Lets get started
+.For example:
+* Arista EOS = `arista.eos.`
+* Cisco IOS/IOS-XE = `cisco.ios.`
+* Juniper Junos = `junipsnetworks.junos.`
+
+
+image::https://github.com/IPvSean/pictures_for_github/blob/master/fact_modules.png?raw=true[picture of facts]
+
+Fact modules are unique per platform.  For Cisco IOS-XE you would use cisco.ios.facts, for Juniper Junos you would use junipernetworks.junos.facts and so on and so forth.
+
+=== What are facts?
+
+Structured data, the Ansible way
+
+image::https://github.com/IPvSean/pictures_for_github/blob/master/transform_data_facts.png?raw=true[picture of transform facts]
+
+image::https://raw.githubusercontent.com/IPvSean/pictures_for_github/master/transform_data_facts2.png[Ansible trasnforms pics]
+
+=== Lets get started
 
 That is the end of of your lab briefing!
 
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[width="100px" align="left"] in the bottom right corner of this window.
+Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[start button,100] in the bottom right corner of this window.
 
+=== Step 1 - Creating the play
 
+Ansible Playbooks are https://yaml.org/[YAML files]. YAML is a structured encoding format that is also extremely human readable (unlike it's subset - the JSON format)
 
+* Click on the code-server tab
 
-== Step 1 - Validate idempotency
+* Create a new file in Visual Studio code.  Click on the *File* Top Nav bar then click *New File*
 
-The `cisco.ios.config` module is idempotent. This means, a configuration change is pushed to the device if and only if that configuration does not exist on the end hosts.
+* For simplicity please name the playbook: `facts.yml`
 
-[cols="1"]
-|===
-| *Need help with Ansible Automation terminology?*
-| Check out the https://docs.ansible.com/ansible/latest/reference_appendices/glossary.html[glossary here] for more information on terms like idempotency.
-|===
-
-To validate the concept of idempotency, re-run the playbook:
+* Enter the following play definition into facts.yml:
 
 ----
-ansible-navigator run playbook.yml --mode stdout
+---
+- name: gather information from routers
+  hosts: cisco
+  gather_facts: no
 ----
 
-[cols="1"]
-|===
-| *NOTE:*
-| See that the *changed parameter* in the *PLAY RECAP* indicates 0 changes.
-|===
+.Here is an explanation of each line:
+* The first line, `---` indicates that this is a YAML file.
+* The `- name:` keyword is an optional description for this particular Ansible Playbook.
+* The `hosts:` keyword means this playbook against the group *cisco* defined in the inventory file.
+* The `gather_facts: no` turns of auto-fact gathering, we are going to use a module instead.
 
-Re-running the Ansible Playbook multiple times will result in the same exact output, with *ok=1* and *change=0*.
+=== Step 2 - Create the facts task
 
-Unless another operator or process removes or modifies the existing configuration on rtr1, this Ansible Playbook will just keep reporting ok=1 indicating that the configuration already exists and is configured correctly on the network device.
-
-== Step 2 - Modify Ansible Playbook
-
-Now update the task to add one more SNMP RO community string named ansible-test.
+Append the following to your playbook:
 
 ----
-snmp-server community ansible-test RO
+  tasks:
+    - name: gather router facts
+      cisco.ios.facts:
 ----
 
-Use code-server to open the `playbook.yml` file to add the command:
+[NOTE]
+====
+A play is a list of tasks. Modules are pre-written code that perform the task.
+====
 
-Make sure to save the playbook.yml with the change.
+=== Step 3 - Executing the playbook
 
-== Step 3 - Use check mode
-
-This time however, instead of running the playbook to push the change to the device, execute it using the --check flag in combination with the -v or verbose mode flag:
-
-----
-ansible-navigator run playbook.yml --mode stdout --check -v
-----
-
-The `--check mode` in combination with the `--verbose` flag will display the exact changes that will be deployed to the end device without actually pushing the change. This is a great technique to validate the changes you are about to push to a device before pushing it.
-
-== Step 4 - Verify configuration is not present
-
-Verify that the Ansible Playbook did not apply the ansible-test community. Login to `cisco` and check the running configuration on the Cisco IOS-XE device.
+Click on the terminal tab. Execute the Ansible Playbook by running ansible-navigator:
 
 ----
-ssh cisco
-show run | i snmp
+ansible-navigator run facts.yml
 ----
 
-The output should look like the following:
-----
-snmp-server community ansible-public RO
-snmp-server community ansible-private RW
-----
+This will open an interactive session while the playbook interacts.
 
-== Step 5 - Re-run the Ansible Playbook
+* To zoom into the playbook output we can press 0 which will show us a host-centric view. Since there is only one host, there is just one option.
+* To see the verbose output of cisco press 0 one more time to zoom into the module return values.
 
-Finally re-run this playbook again without the -v or --check flag to push the changes.
+You can scroll down to view any facts that were collected from the Cisco network device.
 
-----
-ansible-navigator run playbook.yml --mode stdout
-----
-
-== Step 6 - Verify Config is present
-
-----
-ssh cisco
-----
-
-Feel free to cut and paste the following command.
-
-----
-sh run | i snmp
-----
-
-The output should look like the following:
-
-----
-snmp-server community ansible-public RO
-snmp-server community ansible-private RW
-snmp-server community ansible-test RO
-----
+=== Complete
+You have completed challenge 2!
 
 
-== Takeaways
-
-* The config (e.g. `cisco.ios.config`) modules are idempotent, meaning they are stateful
-* *check mode* ensures the Ansible Playbook does not make any changes on the remote systems
-* *verbose mode* allows us to see more output to the terminal window, including which commands would be applied
-* This Ansible Playbook could be scheduled in *Automation controller* to enforce the configuration. For example this could mean the Ansible Playbook could be run once a day for a particular network. In combination with *check mode* this could just be a read only Ansible Playbook that sees and reports if configuration is missing or modified on the network.
-
-*--Complete--*

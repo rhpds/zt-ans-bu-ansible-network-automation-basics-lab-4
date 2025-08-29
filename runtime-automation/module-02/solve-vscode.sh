@@ -1,23 +1,17 @@
 #!/bin/bash
 
-tee /home/rhel/solve_challenege_2.yml << EOF
+tee /home/rhel/facts.yml << EOF
 
 ---
-- name: snmp ro/rw string configuration
+- name: gather information from routers
   hosts: cisco
   gather_facts: no
 
   tasks:
-
-    - name: ensure that the desired snmp strings are present
-      cisco.ios.config:
-        commands:
-          - snmp-server community ansible-public RO
-          - snmp-server community ansible-private RW
-          - snmp-server community ansible-test RO
+    - name: gather router facts
+      cisco.ios.facts:
 
 
 EOF
 
 
-su - rhel -c 'ansible-navigator run  /home/rhel/solve_challenege_2.yml --mode stdout'
