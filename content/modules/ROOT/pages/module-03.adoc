@@ -1,61 +1,99 @@
-= Using the Debug Module
+= Execute a job template with a survey
 
-== Learn how to use facts with the debug module
+== Basics Lab 4
+*Challenge 3, running a Network-Banner job template*
 
-=== Displaying output - The "debug" module
+=== Challenge 3 - Running the Network-Banner automation job
 
-The debug module is used like a "print" statement in most programming languages. Variables are accessed
-using "{{ }}" - quoted curly braces
+This challenge will walk you through using automation controller to execute the Network-Banner job you created on the 1st and 2nd challenge.
 
-image::https://github.com/IPvSean/pictures_for_github/blob/master/debug.png?raw=true[picture of debug tasks]
+Please click the Green Start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] on the bottom right corner if it did not already start provisioning.
 
-=== Working with Ansible facts
 
-image::https://github.com/IPvSean/pictures_for_github/blob/master/display_vlans.png?raw=true[display vlans picture]
+=== Launching a job
 
-=== Running the Ansible Playbook
+You can launch a Job from the Job Template listings window (where all Job Templates are listed when you click on Job Template) *OR* the individual Job Template you want to execute.
 
-image::https://github.com/IPvSean/pictures_for_github/blob/master/navigator_output.png?raw=true[display vlans picture]
+To launch straight from the Job Template listings window, click on the rocket ship icon:
+
+image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey/images/controller_launch_template.png[rocket ship]
+
+=== Survey Prompt
+
+Your survey will launch a walkthrough window with questions for the user:
+
+image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey/images/controller_survey.png[picture of survey]
+
+This creates guard rails for automation users to have specific control to variables you will allow them to control.
 
 === Lets get started
 
 That is the end of of your lab briefing!
 
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[start button,100,align=left] in the bottom right corner of this window.
+Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] in the bottom right corner of this window.
 
+For this challenge we are going to run the *Network-Banner* job template
 
-== Step 1 - Using the debug task
+=== Login to automation controller
 
-We will add two additional tasks that display the routers' OS version and serial number.
+If you have been logged out make sure to log back in.
 
-Click on the code-server tab and append the following tasks to your `facts.yml` playbook:
-
-[source]
+* To login to automation controller select the `Automation controller WebUI` tab at the top of your screen.
++
+.Login with the following credentials:
 ----
-    - name: display version
-      debug:
-        msg: "The IOS version is: {{ ansible_net_version }}"
-
-    - name: display serial number
-      debug:
-        msg: "The serial number is: {{ ansible_net_serialnum }}"
+username: admin
+password: ansible123!
 ----
 
-=== Step 2 - Running the playbook with stdout
+=== Step 1 - Execute Network-Banner Job Template
 
-Click on the terminal tab. Now re-run the playbook using the ansible-navigator and the --mode stdout
+* Navigate to *Job Templates* by clicking on *Templates* found under Resources on the left navigation menu.
++
+image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.png?raw=true[Job Templates,150]
 
-The full command is:
+* To execute the *Network-Banner* click the rocket button which incidates the launch job button:
++
+image::https://github.com/IPvSean/pictures_for_github/blob/master/launch_job.png?raw=true[]
 
-[source]
+* The job will immediately prompt the user to set the banner and the type.
+
+* Type in the banner message.
++
 ----
-ansible-navigator run facts.yml --mode stdout
+This router was configured by Ansible
 ----
 
-Using less than 20 lines of "code" you have just automated version and serial number collection. Imagine if you were running this against your production network! You have actionable data in hand that does not go out of date.
+* Choose `motd`.
+
+* Click next to see how the survey rendered the input as extra vars for the Ansible Playbook. For this example the banner text is set as `This router was configured by Ansible`.
++
+image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey/images/controller_survey.png[picture of survey]
+
+* Click the blue Launch button to kick off the job.
++
+image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey/images/controller_launch.png[blue launch button]
+
+
+=== Step 2 - Verify
+
+1. Go to the Terminal tab at the top.
+
+2. Login to the Cisco network device and see the banner setup
++
+[source,bash]
+----
+sudo ssh cisco
+----
 
 === Takeaways
 
-- The `ansible-navigator :doc` command will allow you access to documentation without an internet connection. This documentation also matches the version of Ansible on the control node.
-- The `cisco.ios.facts` module gathers structured data specific for Cisco IOS. There are relevant modules for each network platform. For example there is a `junipernetworks.junos.facts` for Juniper Junos, and a `arista.eos.facts` for Arista EOS.
-- The `debug` module allows an Ansible Playbook to print values to the terminal window.
+You have successfully demonstrated:
+
+- Creation of a Job Template for configuring a banner on multiple network operating systems including Arista EOS, Cisco IOS and Juniper Junos.
+- Creation of a self service survey for the Job Template to fill out the `network_banner` and `banner_type` variables
+- Executing a Job Template that can run on hundreds of network devices and platforms simultaneously
+
+=== Complete Lab
+
+Click the Green `Check` button below to automatically verify the job executed.

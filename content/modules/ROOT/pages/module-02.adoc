@@ -1,106 +1,167 @@
-= Ansible Facts Playbook
+= Create a survey
 
-== Everything begins and starts with facts
+== Basics Lab 4
 
-=== More about Modules
-
-Modules do the actual work in Ansible, they are what gets executed in each playbook task.
-
-* Typically written in Python (but not limited to it)
-* Modules can be idempotent
-* Modules take user input in the form of parameters
-
-=== Network modules
-
-Ansible modules for network automation typically references the vendor OS followed by the module name.
-
-`namename.collection.module`
-
-* namespace.collection.`facts`
-* namespace.collection.`command`
-* namespace.collection.`config`
-* namespace.collection.`resource`
-
-.For example:
-* Arista EOS = `arista.eos.`
-* Cisco IOS/IOS-XE = `cisco.ios.`
-* Juniper Junos = `junipsnetworks.junos.`
+*Challenge 2, creating a survey in Automation controller*
 
 
-image::https://github.com/IPvSean/pictures_for_github/blob/master/fact_modules.png?raw=true[picture of facts]
+=== Challenge 2 - Creating the Survey
 
-Fact modules are unique per platform.  For Cisco IOS-XE you would use cisco.ios.facts, for Juniper Junos you would use junipernetworks.junos.facts and so on and so forth.
+In this challenge you will create a "survey" of user input form to collect input from the user and populate the values for the variables `net_banner` and `banner_type`
 
-=== What are facts?
 
-Structured data, the Ansible way
+Please click the Green Start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] on the bottom right corner if it did not already start provisioning.
 
-image::https://github.com/IPvSean/pictures_for_github/blob/master/transform_data_facts.png?raw=true[picture of transform facts]
 
-image::https://raw.githubusercontent.com/IPvSean/pictures_for_github/master/transform_data_facts2.png[Ansible trasnforms pics]
+=== Examine the playbook
+
+[source,yaml]
+----
+---
+- name: set router banners
+  hosts: routers
+  gather_facts: no
+
+  tasks:
+    - name: load banner onto network device
+      vars:
+        - network_banner:  "{{ net_banner | default(None) }}"
+        - banner_type: "{{ net_type | default('login') }}"
+      include_role:
+        name: "../roles/banner"
+----
+
+You can also view this https://github.com/network-automation/toolkit/blob/master/playbooks/network_banner.yml[Ansible Playbook here]
+
+The role *banner* has a very simple main.yml file:
+
+[source,yaml]
+----
+- name: configure banner
+  include_tasks: "{{ ansible_network_os }}.yml"
+----
+
+The `ansible_network_os` variable is being used to parameterize the network OS and create a vendor neutral playbook.
+
+If you are working with a junos device, this playbook would call for a task file called junos.yml. If you are using an IOS-XE device, this playbook would call for a task file called ios.yml. This file will in turn contain the platform specific tasks:
+
+----
+---
+- name: add the junos banner
+  junos_banner:
+    text: "{{ network_banner }}"
+    banner: "{{ banner_type }}"
+----
+
+Also note that we are passing in 2 variables to the task file.
+
+1. `network_banner`: This variable is populated using the `net_banner` variable
+
+2. `banner_type`: This variable is populated by a variable named `net_type`
+
+Make sure to enable the survey
+
+image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey/images/controller_survey_toggle.png[picture of survey enabled]
 
 === Lets get started
 
 That is the end of of your lab briefing!
 
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[start button,100] in the bottom right corner of this window.
+Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] in the bottom right corner of this window.
 
-=== Step 1 - Creating the play
+=== Login to automation controller
 
-Ansible Playbooks are https://yaml.org/[YAML files]. YAML is a structured encoding format that is also extremely human readable (unlike it's subset - the JSON format)
+If you have been logged out, login back into automation controller +
+ +
+Select the `Automation controller WebUI` tab at the top of your screen.
 
-* Click on the code-server tab
+Login with the following credentials:
 
-* Create a new file in Visual Studio code.  Click on the *File* Top Nav bar then click *New File*
+username: `admin` +
+password: `ansible123!`
 
-* For simplicity please name the playbook: `facts.yml`
+=== Step 1 - Navigate to the Network-Banner Job Template
 
-* Enter the following play definition into facts.yml:
+- Navigate to *Job Templates* by clicking on *Templates* found under Resources on the left navigation menu. image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.png?raw=true[]
+- You will see any created *Job Templates*.
+- Click on the *Network-Banner* Job template
 
-----
----
-- name: gather information from routers
-  hosts: cisco
-  gather_facts: no
-----
+=== Step 2 - Create the survey
 
-.Here is an explanation of each line:
-* The first line, `---` indicates that this is a YAML file.
-* The `- name:` keyword is an optional description for this particular Ansible Playbook.
-* The `hosts:` keyword means this playbook against the group *cisco* defined in the inventory file.
-* The `gather_facts: no` turns of auto-fact gathering, we are going to use a module instead.
+In this step you will create a `survey` of user input form to collect input from the user and populate the values for the variables net_banner and net_type
 
-=== Step 2 - Create the facts task
+1. Click on the Survey tab within the Network-Banner Job Template
++
+image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_tab.png?raw=true[]
 
-Append the following to your playbook:
+2. Click the blue Add button
++
+image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_add.png?raw=true[]
 
-----
-  tasks:
-    - name: gather router facts
-      cisco.ios.facts:
-----
+3. Fill out the fields
++
+[cols="1,1"]
+|===
+|Parameter |Value
 
-[NOTE]
-====
-A play is a list of tasks. Modules are pre-written code that perform the task.
-====
+|Question
+|Please enter the banner text
 
-=== Step 3 - Executing the playbook
+|Description
+|Please type into the text field the desired banner
 
-Click on the terminal tab. Execute the Ansible Playbook by running ansible-navigator:
+|Answer Variable Name
+|net_banner
 
-----
-ansible-navigator run facts.yml
-----
+|Answer type
+|Textarea
 
-This will open an interactive session while the playbook interacts.
-
-* To zoom into the playbook output we can press 0 which will show us a host-centric view. Since there is only one host, there is just one option.
-* To see the verbose output of cisco press 0 one more time to zoom into the module return values.
-
-You can scroll down to view any facts that were collected from the Cisco network device.
-
-=== Complete
-You have completed challenge 2!
+|Required
+|Checkmark ✅
+|===
 
 
+4. Click Save
+
+5. Click the blue Add button back in the Survey tab to create another question
++
+image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_add.png?raw=true[]
+
+6. Next we will create a survey prompt to gather the `banner_type`. This will either be `motd` or `login` and will default to "login" per the playbook above.
++
+[cols="1,1"]
+|===
+|Parameter |Value
+
+|Question
+|Please enter the banner type
+
+|Description
+|Please choose an option
+
+|Answer Variable Name
+|`net_type`
+
+|Answer type
+|Multiple Choice(single select)
+
+|Multiple Choice Options
+a|
+* login
+* motd
+
+|default answer
+|login
+
+|Required
+|Checkmark ✅
+|===
+
+
+7. Click Save
+
+8. Ensure the toggle switch is set to `Survey Enabled`
++
+image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_enabled.png?raw=true[]
+
+=== Challenge Complete!

@@ -1,92 +1,82 @@
-= Using Ansible documentation
+= Create a network banner automation job template
 
-== For this challenge we will examine an already created Ansible Playbook
+== Basics Lab 4
+
+*Challenge 1, learn how to create a Network-Banner job template in Automation controller*
+
+=== Lab 4 - Learning about Ansible Automation Platform Surveys
+
+Demonstrate the use of automation controller https://docs.ansible.com/automation-controller/latest/html/userguide/job_templates.html#surveys[survey feature]. Surveys set extra variables for the playbook similar to 'Prompt for Extra Variables', but in a user-friendly question and answer way. Surveys allow for validation of user input.
+
+Please click the Green Start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] on the bottom right corner if it did not already start provisioning.
+
+=== Survey
+
+An Ansible Controller survey is a simple question-and-answer form that allows users to customize their job runs. Combine that with Controller's role-based access control, and you can build simple, easy self-service for your users.
+
+Use cases for surveys are numerous. An example might be if operations wanted to give developers a "push to stage" button they could run without advanced Ansible knowledge. When launched, this task could prompt for answers to questions such as, "What tag should we release?"
+
+Many types of questions can be asked, including multiple-choice questions.
 
 
-=== Network Facts
+=== Create a Job Template first
 
-Topics Covered:
-- Ansible Documentation
-- Facts for Network Devices
-- The debug module
+Once a Job Template is created and saved the top menu will have a tab *Survey*
 
-=== "Ansible for Network Automation" Documentation
-
-image::https://github.com/IPvSean/pictures_for_github/blob/master/network_docs.png?raw=true[picture of documentation for network automation]
-
-link:red.ht/NetworkDocs[red.ht/NetworkDocs]
-
-Specific Network Automation Section for Ansible including a getting started guide
-
-=== Accessing the Ansible docs
-
-With the use of the latest command utility ansible-navigator, one can trigger access to all the modules available to them as well as details on specific modules.
-
-[source,bash]
-----
-$ ansible-navigator doc -l -m stdout
-add_host
-amazon.aws.aws_az_facts
-amazon.aws.aws_caller_facts
-amazon.aws.aws_caller_info
-
-----
-
-A formal introduction to ansible-navigator and how it can be used to run playbooks in the following exercise.
+image::https://github.com/IPvSean/pictures_for_github/blob/master/survey.png?raw=true[picture of where survey button is]
 
 === Lets get started
 
 That is the end of of your lab briefing!
 
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[width=100px,align=left] in the bottom right corner of this window.
+Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] in the bottom right corner of this window.
 
+For this exercise we are going to create an automation job on Automation controller
 
-=== Step 1 - Using documentation
+=== Login to automation controller
 
-Enter the `ansible-navigator` interactive mode on the terminal tab
+To login to automation controller select the `Automation controller WebUI` tab at the top of your screen.
 
-[source,bash]
-----
-ansible-navigator
-----
+Login with the following credentials:
 
-You will see the following:
-----
-`:doc <plugin>`
-----
+username: `admin` +
+password: `ansible123!`
 
-To show how this works,  use the `debug` module by typing `:doc debug`
+=== Step 1 - Create an automation job
 
-[source,bash]
-----
-:doc debug
-----
+- Navigate to *Job Templates* by clicking on *Templates* found under Resources on the left navigation menu. image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.png?raw=true[Job Templates,150]
+- You will see any created *Job Templates*.  Job templates encourage the reuse of Ansible playbook content and collaboration between teams.
+- Click the blue Add button and select *Add job template*
+- Assign the following values
 
-The documentation for the `debug` module is now displayed in you interactive terminal session.  This is a YAML representation of the same exact documentation you would see on link:https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module.html[docs.ansible.com].  Examples can be cut and paste directly from the module documentation into your Ansible Playbook.
+[cols="1,1"]
+|===
+|Name |Value
 
-When referring to a non-built in module, there is three important fields:
+|Name
+|`Network-Banner`
 
-----
-namespace.collection.module
-----
-.For example:
-----
-cisco.ios.facts
-----
+|Job Type
+|`Run`
 
-*Explanation of terms:*
+|Inventory
+|`Network Inventory`
 
-- *namespace* - example *cisco* - A namespace is grouping of multiple collections.  The *cisco* namespace contains multiple collections including *ios*, *nxos*, and *iosxr*.
+|Project
+|`Network Toolkit`
 
-- *collection* - example *ios* - A collection is a distribution format for Ansible content that can include playbooks, roles, modules, and plugins.  The *ios* collection contains all the modules for Cisco IOS/IOS-XE
+|Execution Environment
+|`Default execution environment`
 
-- *module* - example facts - Modules are discrete units of code that can be used in a playbook task. For example the *facts* modules will return structured data about that specified system.
+|Playbook
+|`playbooks/network_banner.yml`
 
-Press the *Esc* key to return to the main menu.  Try repeating the `:doc` command with the `cisco.ios.facts` module.
+|Credential
+|`Network Credential`
+|===
 
-[source,bash]
-----
-:doc cisco.ios.facts
-----
+- Click the blue *Save* button to save your job template.
 
-We will be using the facts module in our playbook.
+=== Step 2 - Verify
+
+Click the Green `Check` button below to verify the job template was created.

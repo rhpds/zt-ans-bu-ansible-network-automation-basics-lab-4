@@ -7,18 +7,18 @@ antora:
       label: "Introduction"
       solveButton: false
     - name: module-01
-      label: "Using Ansible documentation"
+      label: "create-network-backup-job"
       solveButton: false
     - name: module-02
-      label: "Ansible Facts Playbook"
+      label: "create-survey"
       solveButton: true
     - name: module-03
-      label: "Using the Debug Module"
+      label: "execute-survey-job-template"
       solveButton: false
 
 tabs:
-  - name: "code-server"
-    url: https://vscode-${guid}.${domain}/?folder=/home/rhel
+  - name: "Ansible Automation Platform"
+    url: https://controller-${guid}.${domain}/
     external: false
   - name: "TERMINAL"
-    url: /wetty_vscode
+    url: /wetty_controller
