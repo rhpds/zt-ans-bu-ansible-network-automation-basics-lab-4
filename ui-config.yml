@@ -11,7 +11,7 @@ antora:
       solveButton: false
     - name: module-02
       label: "create-survey"
-      solveButton: true
+      solveButton: false
     - name: module-03
       label: "execute-survey-job-template"
       solveButton: false
