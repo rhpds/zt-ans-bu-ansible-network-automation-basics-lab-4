@@ -33,7 +33,6 @@ tee /tmp/setup-scripts/solve_challenege_1.yml << EOF
           restore_project: "Network Toolkit"
           restores_playbook: "playbooks/network_restore.yml"
           restore_credential: "Network Credential"
-        credential_type: Red Hat Ansible Automation Platform
         controller_username: "{{ aap_username }}"
         controller_password: "{{ aap_password }}"
         controller_host: "https://{{ aap_hostname }}"

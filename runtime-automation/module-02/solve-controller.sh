@@ -36,9 +36,16 @@ EOF
 
 tee /tmp/setup-scripts/solve_challenege_2.yml << EOF
 ---
-- hosts: localhost
+- name: setup controller for network use cases
+  hosts: localhost
   connection: local
-  gather_facts: false
+  collections:
+    - ansible.controller
+  vars:
+    aap_hostname: localhost
+    aap_username: admin
+    aap_password: ansible123!
+    aap_validate_certs: false
   tasks:
     - name: Create network backup job template
       ansible.controller.job_template:
@@ -51,7 +58,6 @@ tee /tmp/setup-scripts/solve_challenege_2.yml << EOF
         credentials:
           - "Network Credential"
         state: "present"
-        controller_config_file: "/tmp/setup-scripts/controller.cfg"
         survey_enabled: yes
         controller_username: "{{ aap_username }}"
         controller_password: "{{ aap_password }}"
