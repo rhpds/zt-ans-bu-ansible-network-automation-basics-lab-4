@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tee /home/rhel/banner-survey.json << EOF
+tee /tmp/setup-scripts/banner-survey.json << EOF
 {
     "name": "",
     "description": "",
@@ -34,14 +34,14 @@ tee /home/rhel/banner-survey.json << EOF
 
 EOF
 
-tee /home/rhel/solve_challenege_2.yml << EOF
+tee /tmp/setup-scripts/solve_challenege_2.yml << EOF
 ---
 - hosts: localhost
   connection: local
   gather_facts: false
   tasks:
     - name: Create network backup job template
-      awx.awx.job_template:
+      ansible.controller.job_template:
         name: "Network-Banner"
         job_type: "run"
         organization: "Default"
@@ -53,9 +53,12 @@ tee /home/rhel/solve_challenege_2.yml << EOF
         state: "present"
         controller_config_file: "/tmp/setup-scripts/controller.cfg"
         survey_enabled: yes
-        survey_spec: "{{ lookup('file', 'banner-survey.json') }}"
+        controller_username: "{{ aap_username }}"
+        controller_password: "{{ aap_password }}"
+        controller_host: "https://{{ aap_hostname }}"
+        validate_certs: "{{ aap_validate_certs }}"
 EOF
 
 sudo chown rhel:rhel /home/rhel/solve_challenege_2.yml
 
-su - rhel -c 'ansible-playbook /home/rhel/solve_challenege_2.yml'
+sudo su - -c "ANSIBLE_COLLECTIONS_PATH=/root/.ansible/collections/ansible_collections/ /usr/bin/ansible-playbook /tmp/setup-scripts/solve_challenege_2.yml"
