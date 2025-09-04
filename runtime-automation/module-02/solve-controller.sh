@@ -59,12 +59,10 @@ tee /tmp/setup-scripts/solve_challenege_2.yml << EOF
           - "Network Credential"
         state: "present"
         survey_enabled: yes
+        survey_spec: "{{ lookup('file', '/tmp/setup-scripts/banner-survey.json') }}"
         controller_username: "{{ aap_username }}"
         controller_password: "{{ aap_password }}"
         controller_host: "https://{{ aap_hostname }}"
         validate_certs: "{{ aap_validate_certs }}"
 EOF
-
-sudo chown rhel:rhel /home/rhel/solve_challenege_2.yml
-
 sudo su - -c "ANSIBLE_COLLECTIONS_PATH=/root/.ansible/collections/ansible_collections/ /usr/bin/ansible-playbook /tmp/setup-scripts/solve_challenege_2.yml"
