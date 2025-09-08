@@ -9,7 +9,6 @@
 
 In this challenge you will create a "survey" of user input form to collect input from the user and populate the values for the variables `net_banner` and `banner_type`
 
-// Please click the Green Start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] on the bottom right corner if it did not already start provisioning.
 
 * Examine the playbook
 +

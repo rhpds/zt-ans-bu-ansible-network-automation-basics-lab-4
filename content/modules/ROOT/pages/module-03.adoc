@@ -3,48 +3,48 @@
 == Basics Lab 4
 *Challenge 3, running a Network-Banner job template*
 
-=== Challenge 3 - Running the Network-Banner automation job
+== Challenge 3 - Running the Network-Banner automation job
 
 This challenge will walk you through using automation controller to execute the Network-Banner job you created on the 1st and 2nd challenge.
 
-Please click the Green Start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] on the bottom right corner if it did not already start provisioning.
 
-
-=== Launching a job
+== Launching a job
 
 You can launch a Job from the Job Template listings window (where all Job Templates are listed when you click on Job Template) *OR* the individual Job Template you want to execute.
 
-To launch straight from the Job Template listings window, click on the rocket ship icon:
-
+* To launch straight from the Job Template listings window, click on the rocket ship icon:
++
 image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey/images/controller_launch_template.png[rocket ship]
 
-=== Survey Prompt
+== Survey Prompt
 
-Your survey will launch a walkthrough window with questions for the user:
-
+* Your survey will launch a walkthrough window with questions for the user:
++
 image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey/images/controller_survey.png[picture of survey]
 
++
 This creates guard rails for automation users to have specific control to variables you will allow them to control.
 
-=== Lets get started
+== Lets get started
 
 That is the end of of your lab briefing!
 
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] in the bottom right corner of this window.
+// Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] in the bottom right corner of this window.
 
 For this challenge we are going to run the *Network-Banner* job template
 
 === Login to automation controller
 
-If you have been logged out make sure to log back in.
+* If you have been logged out make sure to log back in. To login to automation controller select the `Automation controller WebUI` tab at the top of your screen.
 
-* To login to automation controller select the `Automation controller WebUI` tab at the top of your screen.
+* Login with the following credentials:
 +
-.Login with the following credentials:
-----
-username: admin
-password: ansible123!
-----
+[%autowidth.stretch,width=70%,cols="^.^a,^.^a"]
+|===
+| username | admin
+| password | ansible123!
+|===
+
 
 === Step 1 - Execute Network-Banner Job Template
 
@@ -77,23 +77,22 @@ image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey
 
 === Step 2 - Verify
 
-1. Go to the Terminal tab at the top.
-
-2. Login to the Cisco network device and see the banner setup
+. Go to the Terminal tab at the top.
+. Login to the Cisco network device and see the banner setup
 +
 [source,bash]
 ----
 sudo ssh cisco
 ----
 
-=== Takeaways
+== Takeaways
 
 You have successfully demonstrated:
 
-- Creation of a Job Template for configuring a banner on multiple network operating systems including Arista EOS, Cisco IOS and Juniper Junos.
-- Creation of a self service survey for the Job Template to fill out the `network_banner` and `banner_type` variables
-- Executing a Job Template that can run on hundreds of network devices and platforms simultaneously
+* Creation of a Job Template for configuring a banner on multiple network operating systems including Arista EOS, Cisco IOS and Juniper Junos.
 
-=== Complete Lab
+* Creation of a self service survey for the Job Template to fill out the `network_banner` and `banner_type` variables
 
-Click the Green `Check` button below to automatically verify the job executed.
+* Executing a Job Template that can run on hundreds of network devices and platforms simultaneously
+
+=== Challenge Complete!
