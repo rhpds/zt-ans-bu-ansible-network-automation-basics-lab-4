@@ -25,7 +25,7 @@ tee /tmp/setup-scripts/banner-survey.json << EOF
             "variable": "net_type",
             "min": 0,
             "max": 1024,
-            "default": "",
+            "default": "login",
             "choices": "login\nmotd",
             "new_question": true
         }
