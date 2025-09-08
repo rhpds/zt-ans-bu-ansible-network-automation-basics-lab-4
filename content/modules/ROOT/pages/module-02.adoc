@@ -5,16 +5,14 @@
 *Challenge 2, creating a survey in Automation controller*
 
 
-=== Challenge 2 - Creating the Survey
+== Challenge 2 - Creating the Survey
 
 In this challenge you will create a "survey" of user input form to collect input from the user and populate the values for the variables `net_banner` and `banner_type`
 
+// Please click the Green Start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] on the bottom right corner if it did not already start provisioning.
 
-Please click the Green Start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] on the bottom right corner if it did not already start provisioning.
-
-
-=== Examine the playbook
-
+* Examine the playbook
++
 [source,yaml]
 ----
 ---
@@ -30,21 +28,25 @@ Please click the Green Start button image:https://github.com/IPvSean/pictures_fo
       include_role:
         name: "../roles/banner"
 ----
++
+NOTE: You can also view this https://github.com/network-automation/toolkit/blob/master/playbooks/network_banner.yml[Ansible Playbook here]
 
-You can also view this https://github.com/network-automation/toolkit/blob/master/playbooks/network_banner.yml[Ansible Playbook here]
-
-The role *banner* has a very simple main.yml file:
-
+* The role *banner* has a very simple main.yml file:
++
 [source,yaml]
 ----
 - name: configure banner
   include_tasks: "{{ ansible_network_os }}.yml"
+
 ----
-
++
+[IMPORTANT]
+====
 The `ansible_network_os` variable is being used to parameterize the network OS and create a vendor neutral playbook.
+====
 
-If you are working with a junos device, this playbook would call for a task file called junos.yml. If you are using an IOS-XE device, this playbook would call for a task file called ios.yml. This file will in turn contain the platform specific tasks:
-
+* If you are working with a junos device, this playbook would call for a task file called junos.yml. If you are using an IOS-XE device, this playbook would call for a task file called ios.yml. This file will in turn contain the platform specific tasks:
++
 ----
 ---
 - name: add the junos banner
@@ -53,114 +55,95 @@ If you are working with a junos device, this playbook would call for a task file
     banner: "{{ banner_type }}"
 ----
 
-Also note that we are passing in 2 variables to the task file.
+* Also note that we are passing in 2 variables to the task file.
++
+. `network_banner`: This variable is populated using the `net_banner` variable
 
-1. `network_banner`: This variable is populated using the `net_banner` variable
+. `banner_type`: This variable is populated by a variable named `net_type`
 
-2. `banner_type`: This variable is populated by a variable named `net_type`
-
-Make sure to enable the survey
-
+* Make sure to enable the survey
++
 image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey/images/controller_survey_toggle.png[picture of survey enabled]
 
-=== Lets get started
+== Lets get started
 
 That is the end of of your lab briefing!
 
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] in the bottom right corner of this window.
+// Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] in the bottom right corner of this window.
 
 === Login to automation controller
 
-If you have been logged out, login back into automation controller +
- +
-Select the `Automation controller WebUI` tab at the top of your screen.
+If you have been logged out, login back into automation controller.
 
-Login with the following credentials:
-
-username: `admin` +
-password: `ansible123!`
+* Select the `Automation controller WebUI` tab at the top of your screen. Login with the following credentials:
++
+[%autowidth.stretch,width=70%,cols="^.^a,^.^a"]
+|===
+| username | admin
+| password | ansible123!
+|===
 
 === Step 1 - Navigate to the Network-Banner Job Template
 
-- Navigate to *Job Templates* by clicking on *Templates* found under Resources on the left navigation menu. image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.png?raw=true[]
-- You will see any created *Job Templates*.
-- Click on the *Network-Banner* Job template
+* Navigate to *Job Templates* by clicking on *Templates* found under Resources on the left navigation menu.
++
+image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.png?raw=true[]
+
+* You will see any created *Job Templates*.
+
+* Click on the *Network-Banner* Job template
 
 === Step 2 - Create the survey
 
 In this step you will create a `survey` of user input form to collect input from the user and populate the values for the variables net_banner and net_type
 
-1. Click on the Survey tab within the Network-Banner Job Template
+* Click on the Survey tab within the Network-Banner Job Template
 +
 image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_tab.png?raw=true[]
 
-2. Click the blue Add button
+* Click the blue Add button
 +
 image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_add.png?raw=true[]
 
-3. Fill out the fields
+* Fill out the fields
 +
-[cols="1,1"]
+[%autowidth.stretch,width=70%,cols="^.^a,^.^a",options="header"]
 |===
-|Parameter |Value
-
-|Question
-|Please enter the banner text
-
-|Description
-|Please type into the text field the desired banner
-
-|Answer Variable Name
-|net_banner
-
-|Answer type
-|Textarea
-
-|Required
-|Checkmark ✅
+|Parameter            |Value
+|Question             |Please enter the banner text
+|Description          |Please type into the text field the desired banner
+|Answer Variable Name |net_banner
+|Answer type          |Textarea
+|Required             |Checkmark ✅
 |===
 
 
-4. Click Save
+* Click Save
 
-5. Click the blue Add button back in the Survey tab to create another question
+* Click the blue Add button back in the Survey tab to create another question
 +
 image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_add.png?raw=true[]
 
-6. Next we will create a survey prompt to gather the `banner_type`. This will either be `motd` or `login` and will default to "login" per the playbook above.
+* Next we will create a survey prompt to gather the `banner_type`. This will either be `motd` or `login` and will default to "login" per the playbook above.
 +
-[cols="1,1"]
+[%autowidth.stretch,width=70%,cols="^.^a,^.^a",options="header"]
 |===
-|Parameter |Value
-
-|Question
-|Please enter the banner type
-
-|Description
-|Please choose an option
-
-|Answer Variable Name
-|`net_type`
-
-|Answer type
-|Multiple Choice(single select)
-
-|Multiple Choice Options
-a|
-* login
-* motd
-
-|default answer
-|login
-
-|Required
-|Checkmark ✅
+|Parameter                  |Value
+|Question                   |Please enter the banner type
+|Description                |Please choose an option
+|Answer Variable Name       |`net_type`
+|Answer type                |Multiple Choice(single select)
+|Multiple Choice Options    
+                          a|  * login
+                              * motd
+|default answer             |login
+|Required                   |Checkmark ✅
 |===
 
 
-7. Click Save
+* Click Save
 
-8. Ensure the toggle switch is set to `Survey Enabled`
+* Ensure the toggle switch is set to `Survey Enabled`
 +
 image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_enabled.png?raw=true[]
 
