@@ -72,9 +72,9 @@ That is the end of of your lab briefing!
 
 === Login to automation controller
 
-If you have been logged out, login back into automation controller.
+* If you have been logged out, login back into automation controller. Select the `Automation controller WebUI` tab at the top of your screen.
 
-* Select the `Automation controller WebUI` tab at the top of your screen. Login with the following credentials:
+* Login with the following credentials:
 +
 [%autowidth.stretch,width=70%,cols="^.^a,^.^a"]
 |===

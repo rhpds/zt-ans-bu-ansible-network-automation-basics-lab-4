@@ -7,12 +7,12 @@
 
 This challenge will walk you through using automation controller to execute the Network-Banner job you created on the 1st and 2nd challenge.
 
-
 == Launching a job
 
 You can launch a Job from the Job Template listings window (where all Job Templates are listed when you click on Job Template) *OR* the individual Job Template you want to execute.
 
 * To launch straight from the Job Template listings window, click on the rocket ship icon:
+
 +
 image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey/images/controller_launch_template.png[rocket ship]
 
@@ -49,10 +49,12 @@ For this challenge we are going to run the *Network-Banner* job template
 === Step 1 - Execute Network-Banner Job Template
 
 * Navigate to *Job Templates* by clicking on *Templates* found under Resources on the left navigation menu.
+
 +
 image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.png?raw=true[Job Templates,150]
 
 * To execute the *Network-Banner* click the rocket button which incidates the launch job button:
+
 +
 image::https://github.com/IPvSean/pictures_for_github/blob/master/launch_job.png?raw=true[]
 
