@@ -49,7 +49,7 @@ To login to automation controller select the `Automation controller WebUI` tab a
 
 === Step 1 - Create an automation job
 
-* Navigate to *Job Templates* by clicking on *Templates* found under Resources on the left navigation menu.
+* In the left navigation menu, expand *Automation Execution* and then click on *Templates*.
 +
 image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.png?raw=true[Job Templates,150]
 

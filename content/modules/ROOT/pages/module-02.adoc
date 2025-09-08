@@ -84,7 +84,7 @@ That is the end of of your lab briefing!
 
 === Step 1 - Navigate to the Network-Banner Job Template
 
-* Navigate to *Job Templates* by clicking on *Templates* found under Resources on the left navigation menu.
+* In the left navigation menu, expand *Automation Execution* and then click on *Templates*.
 +
 image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.png?raw=true[]
 
