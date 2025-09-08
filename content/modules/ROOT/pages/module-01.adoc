@@ -8,7 +8,7 @@
 
 == Lab 4 - Learning about Ansible Automation Platform Surveys
 
-Demonstrate the use of automation controller https://docs.ansible.com/automation-controller/latest/html/userguide/job_templates.html#surveys[survey feature]. Surveys set extra variables for the playbook similar to 'Prompt for Extra Variables', but in a user-friendly question and answer way. Surveys allow for validation of user input.
+Demonstrate the use of automation controller https://docs.ansible.com/automation-controller/latest/html/userguide/job_templates.html#surveys[window=_blank, survey feature]. Surveys set extra variables for the playbook similar to 'Prompt for Extra Variables', but in a user-friendly question and answer way. Surveys allow for validation of user input.
 
 // Please click the Green Start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] on the bottom right corner if it did not already start provisioning.
 

@@ -47,7 +47,7 @@ tee /tmp/setup-scripts/solve_challenege_2.yml << EOF
     aap_password: ansible123!
     aap_validate_certs: false
   tasks:
-    - name: Create network backup job template
+    - name: Create network banner job template
       ansible.controller.job_template:
         name: "Network-Banner"
         job_type: "run"
@@ -57,6 +57,7 @@ tee /tmp/setup-scripts/solve_challenege_2.yml << EOF
         playbook: "playbooks/network_banner.yml"
         credentials:
           - "Network Credential"
+        execution_environment: "Default execution environment"
         state: "present"
         survey_enabled: yes
         survey_spec: "{{ lookup('file', '/tmp/setup-scripts/banner-survey.json') }}"

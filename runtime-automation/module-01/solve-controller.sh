@@ -16,23 +16,18 @@ tee /tmp/setup-scripts/solve_challenege_1.yml << EOF
     aap_validate_certs: false
   tasks:
 
-    - name: Create network backup job template
+    - name: Create network banner job template
       ansible.controller.job_template:
-        name: "Network Automation - Backup"
+        name: "Network-Banner"
         job_type: "run"
         organization: "Default"
         inventory: Network Inventory
         project: "Network Toolkit"
-        playbook: "playbooks/network_backup.yml"
+        playbook: "playbooks/network_banner.yml"
         credentials:
           - "Network Credential"
-          - "AAP controller credential"
+        execution_environment: "Default execution environment"
         state: "present"
-        extra_vars:
-          restore_inventory: "Network Inventory"
-          restore_project: "Network Toolkit"
-          restores_playbook: "playbooks/network_restore.yml"
-          restore_credential: "Network Credential"
         controller_username: "{{ aap_username }}"
         controller_password: "{{ aap_password }}"
         controller_host: "https://{{ aap_hostname }}"

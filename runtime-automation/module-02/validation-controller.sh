@@ -1,27 +1,86 @@
 #!/bin/bash
 
-tee /home/rhel/check_challenege_2.yml << EOF
+cat >/tmp/setup-scripts/check_challenege_2.yml << EOF
 ---
-- hosts: localhost
-  vars: 
-    desired_job_template: 'Network-Banner'
+- name: Check controller config for network use cases
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - ansible.controller
+  vars:
+    aap_hostname: localhost
+    aap_username: admin
+    aap_password: ansible123!
+    aap_validate_certs: false
   tasks:
-    - name: retrieve Network-Banner job template
-      set_fact: 
-        network_banner_exist: "{{ query('awx.awx.controller_api', 'job_templates', query_params={ 'name': desired_job_template }, host='localhost', username='admin', password='ansible123!', verify_ssl=False) }}"
- 
-    - name: print out network_banner_exist var
-      debug: 
-        msg: "{{ network_banner_exist }}"
-      failed_when: network_banner_exist == []
+    - name: Get job templates from Automation Controller
+      uri:
+        url: https://{{ aap_hostname }}/api/controller/v2/job_templates/
+        method: GET
+        validate_certs: "{{ aap_validate_certs }}"
+        user: "{{ aap_username }}"
+        password: "{{ aap_password}}"
+        force_basic_auth: yes
+      register: job_templates
+
+    - name: Print job template names
+      debug:
+        msg: "{{ job_templates.json.results | map(attribute='name') | list }}"
+    
+    - name: Extract job template names
+      set_fact:
+        template_names: "{{ job_templates.json.results | map(attribute='name') | list }}"
+
+    - name: Fail template Network-Banner is not found
+      fail:
+        msg: "Job template 'Network-Banner' does not exist in Automation Controller!"
+      when: "'Network-Banner' not in template_names"
+
+    - name: Extract job template id
+      set_fact:
+        template_id: >-
+          {{
+            (job_templates.json.results
+                | selectattr('name', 'equalto', 'Network-Banner')
+                | map(attribute='id')
+                | first )
+          }}
+
+    - name: Print job template id
+      debug:
+        msg: "Job template id : {{ template_id }}"
+
+    - name: Get job templates survey
+      uri:
+        url: https://{{ aap_hostname }}/api/controller/v2/job_templates/{{ template_id }}/survey_spec/
+        method: GET
+        validate_certs: "{{ aap_validate_certs }}"
+        user: "{{ aap_username }}"
+        password: "{{ aap_password}}"
+        force_basic_auth: yes
+      register: job_templates_survey
+
+    - name: Print job template survey names
+      debug:
+        msg: "{{ job_templates_survey.json.spec | map(attribute='question_name') | list }}"
+
+    - name: Extract job template survey names
+      set_fact:
+        template_survey_names: "{{ job_templates_survey.json.spec | map(attribute='question_name') | list }}"
+
+    - name: Fail template surveys are not found
+      fail:
+        msg: "Job template survey does not exist in Automation Controller!"
+      when:
+        - "'Please enter the banner text' not in template_survey_names"
+        - "'Please enter the banner type' not in template_survey_names"
+
 EOF
 
-sudo chown rhel:rhel /home/rhel/check_challenege_2.yml
+/usr/bin/ansible-playbook /tmp/setup-scripts/check_challenege_2.yml
 
-su - rhel -c 'ansible-playbook /home/rhel/check_challenege_2.yml'
-
-if [ $? -eq 0 ]; then
-    echo OK
-else
-    echo "The job 'Network-Banner' does not exist"
+if [ $? -ne 0 ]; then
+    echo "You have not created the 'Network-Banner' job template Surveys"
+    exit 1
 fi
