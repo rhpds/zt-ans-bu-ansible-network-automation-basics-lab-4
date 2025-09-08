@@ -1,7 +1,0 @@
-:lab_name: Network automation basics: Surveys
-
-= image:https://github.com/network-automation/networking-icons/blob/master/switches/switch_red_small.png?raw=true[] {lab_name}
-
-
-Demonstrate the use of Automation controller survey feature. Surveys set extra variables for the playbook similar to `Prompt for Extra Variables` does, but in a user-friendly question and answer way. Surveys also allow for validation of user input.
-

@@ -1,16 +1,18 @@
 = Create a network banner automation job template
 
+
+
 == Basics Lab 4
 
 *Challenge 1, learn how to create a Network-Banner job template in Automation controller*
 
-=== Lab 4 - Learning about Ansible Automation Platform Surveys
+== Lab 4 - Learning about Ansible Automation Platform Surveys
 
 Demonstrate the use of automation controller https://docs.ansible.com/automation-controller/latest/html/userguide/job_templates.html#surveys[survey feature]. Surveys set extra variables for the playbook similar to 'Prompt for Extra Variables', but in a user-friendly question and answer way. Surveys allow for validation of user input.
 
-Please click the Green Start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] on the bottom right corner if it did not already start provisioning.
+// Please click the Green Start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] on the bottom right corner if it did not already start provisioning.
 
-=== Survey
+== Survey
 
 An Ansible Controller survey is a simple question-and-answer form that allows users to customize their job runs. Combine that with Controller's role-based access control, and you can build simple, easy self-service for your users.
 
@@ -19,17 +21,17 @@ Use cases for surveys are numerous. An example might be if operations wanted to 
 Many types of questions can be asked, including multiple-choice questions.
 
 
-=== Create a Job Template first
+== Create a Job Template first
 
-Once a Job Template is created and saved the top menu will have a tab *Survey*
-
+* Once a Job Template is created and saved the top menu will have a tab *Survey*
++
 image::https://github.com/IPvSean/pictures_for_github/blob/master/survey.png?raw=true[picture of where survey button is]
 
 === Lets get started
 
 That is the end of of your lab briefing!
 
-Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] in the bottom right corner of this window.
+// Once the lab is setup you can click the Green start button image:https://github.com/IPvSean/pictures_for_github/blob/master/start_button.png?raw=true[Start button,100,align=left] in the bottom right corner of this window.
 
 For this exercise we are going to create an automation job on Automation controller
 
@@ -37,46 +39,40 @@ For this exercise we are going to create an automation job on Automation control
 
 To login to automation controller select the `Automation controller WebUI` tab at the top of your screen.
 
-Login with the following credentials:
-
-username: `admin` +
-password: `ansible123!`
+* Login with the following credentials:
++
+[%autowidth.stretch,width=70%,cols="^.^a,^.^a"]
+|===
+| username | admin
+| password | ansible123!
+|===
 
 === Step 1 - Create an automation job
 
-- Navigate to *Job Templates* by clicking on *Templates* found under Resources on the left navigation menu. image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.png?raw=true[Job Templates,150]
-- You will see any created *Job Templates*.  Job templates encourage the reuse of Ansible playbook content and collaboration between teams.
-- Click the blue Add button and select *Add job template*
-- Assign the following values
+* Navigate to *Job Templates* by clicking on *Templates* found under Resources on the left navigation menu.
++
+image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.png?raw=true[Job Templates,150]
 
-[cols="1,1"]
+* You will see any created *Job Templates*.  Job templates encourage the reuse of Ansible playbook content and collaboration between teams.
+
+* Click the blue Add button and select *Add job template*
+
+* Assign the following values
++
+[%autowidth.stretch,width=70%,cols="^.^a,^.^a",options="header"]
 |===
-|Name |Value
-
-|Name
-|`Network-Banner`
-
-|Job Type
-|`Run`
-
-|Inventory
-|`Network Inventory`
-
-|Project
-|`Network Toolkit`
-
-|Execution Environment
-|`Default execution environment`
-
-|Playbook
-|`playbooks/network_banner.yml`
-
-|Credential
-|`Network Credential`
+|Name                   | Value
+|Name                   | Network-Banner
+|Job Type               | Run
+|Inventory              | Network Inventory
+|Project                | Network Toolkit
+|Execution Environment  | Default execution environment
+|Playbook               | playbooks/network_banner.yml
+|Credential             | Network Credential
 |===
 
-- Click the blue *Save* button to save your job template.
+* Click the blue *Save* button to save your job template.
 
 === Step 2 - Verify
 
-Click the Green `Check` button below to verify the job template was created.
+* Click the `Next` button below to verify the job template was created and go to next challenge.
