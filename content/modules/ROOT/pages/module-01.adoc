@@ -55,7 +55,7 @@ image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.p
 
 * You will see any created *Job Templates*.  Job templates encourage the reuse of Ansible playbook content and collaboration between teams.
 
-* Click the blue Add button and select *Add job template*
+* Click the blue Add button and select *Create job template*
 
 * Assign the following values
 +
@@ -71,7 +71,7 @@ image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.p
 |Credential             | Network Credential
 |===
 
-* Click the blue *Save* button to save your job template.
+* Click the blue *Create job template* button to save your job template.
 
 === Step 2 - Verify
 

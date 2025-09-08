@@ -48,15 +48,14 @@ For this challenge we are going to run the *Network-Banner* job template
 
 === Step 1 - Execute Network-Banner Job Template
 
-* Navigate to *Job Templates* by clicking on *Templates* found under Resources on the left navigation menu.
+* In the left navigation menu, expand *Automation Execution* and then click on *Templates*.
 
-+
-image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.png?raw=true[Job Templates,150]
 
 * To execute the *Network-Banner* click the rocket button which incidates the launch job button:
 
 +
 image::https://github.com/IPvSean/pictures_for_github/blob/master/launch_job.png?raw=true[]
+
 
 * The job will immediately prompt the user to set the banner and the type.
 
@@ -69,12 +68,8 @@ This router was configured by Ansible
 * Choose `motd`.
 
 * Click next to see how the survey rendered the input as extra vars for the Ansible Playbook. For this example the banner text is set as `This router was configured by Ansible`.
-+
-image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey/images/controller_survey.png[picture of survey]
 
-* Click the blue Launch button to kick off the job.
-+
-image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey/images/controller_launch.png[blue launch button]
+* Click the *Finish* button to kick off the job.
 
 
 === Step 2 - Verify
@@ -84,7 +79,7 @@ image::https://aap2.demoredhat.com/exercises/ansible_network/7-controller-survey
 +
 [source,bash]
 ----
-sudo ssh cisco
+ssh cisco
 ----
 
 == Takeaways

@@ -97,13 +97,7 @@ image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.p
 In this step you will create a `survey` of user input form to collect input from the user and populate the values for the variables net_banner and net_type
 
 * Click on the Survey tab within the Network-Banner Job Template
-+
-image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_tab.png?raw=true[]
-
-* Click the blue Add button
-+
-image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_add.png?raw=true[]
-
+* Click the blue `Create survey question`.
 * Fill out the fields
 +
 [%autowidth.stretch,width=70%,cols="^.^a,^.^a",options="header"]
@@ -117,11 +111,9 @@ image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_add.png
 |===
 
 
-* Click Save
+* Click `Create survey question` button.
 
-* Click the blue Add button back in the Survey tab to create another question
-+
-image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_add.png?raw=true[]
+* Click the blue `Create survey question`` button back in the Survey tab to create another question.
 
 * Next we will create a survey prompt to gather the `banner_type`. This will either be `motd` or `login` and will default to "login" per the playbook above.
 +
@@ -135,12 +127,12 @@ image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_add.png
 |Multiple Choice Options    
                           a|  * login
                               * motd
-|default answer             |login
+|Default option             |login
 |Required                   |Checkmark ✅
 |===
 
 
-* Click Save
+* Click `Create survey question` button.
 
 * Ensure the toggle switch is set to `Survey Enabled`
 +
