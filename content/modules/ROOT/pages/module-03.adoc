@@ -74,7 +74,7 @@ This router was configured by Ansible
 
 === Step 2 - Verify
 
-. Go to the Terminal tab at the top.
+. Go to the *Terminal* tab at the top.
 . Login to the Cisco network device and see the banner setup
 +
 [source,bash]

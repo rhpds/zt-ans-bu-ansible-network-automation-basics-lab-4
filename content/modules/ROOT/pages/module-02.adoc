@@ -85,8 +85,6 @@ That is the end of of your lab briefing!
 === Step 1 - Navigate to the Network-Banner Job Template
 
 * In the left navigation menu, expand *Automation Execution* and then click on *Templates*.
-+
-image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.png?raw=true[]
 
 * You will see any created *Job Templates*.
 
@@ -96,7 +94,7 @@ image:https://github.com/IPvSean/pictures_for_github/blob/master/job_templates.p
 
 In this step you will create a `survey` of user input form to collect input from the user and populate the values for the variables net_banner and net_type
 
-* Click on the Survey tab within the Network-Banner Job Template
+* Click on the Survey tab within the *Network-Banner* Job Template
 * Click the blue `Create survey question`.
 * Fill out the fields
 +
@@ -111,11 +109,11 @@ In this step you will create a `survey` of user input form to collect input from
 |===
 
 
-* Click `Create survey question` button.
+* Click *Create survey question* button.
 
-* Click the blue `Create survey question`` button back in the Survey tab to create another question.
+* Click the blue *Create survey question* button back in the Survey tab to create another question.
 
-* Next we will create a survey prompt to gather the `banner_type`. This will either be `motd` or `login` and will default to "login" per the playbook above.
+* Next we will create a survey prompt to gather the *banner_type*. This will either be `motd` or `login` and will default to "login" per the playbook above.
 +
 [%autowidth.stretch,width=70%,cols="^.^a,^.^a",options="header"]
 |===
@@ -132,9 +130,9 @@ In this step you will create a `survey` of user input form to collect input from
 |===
 
 
-* Click `Create survey question` button.
+* Click *Create survey question* button.
 
-* Ensure the toggle switch is set to `Survey Enabled`
+* Ensure the toggle switch is set to *Survey Enabled*
 +
 image::https://github.com/IPvSean/pictures_for_github/blob/master/survey_enabled.png?raw=true[]
 
